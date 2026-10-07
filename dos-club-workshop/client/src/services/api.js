@@ -1,5 +1,11 @@
-const rawBase = import.meta.env.VITE_API_BASE_URL || '/api';
-const API_BASE = rawBase.endsWith('/') ? rawBase.slice(0, -1) : rawBase;
+let base = import.meta.env.VITE_API_BASE_URL || '/api';
+if (base.endsWith('/')) {
+  base = base.slice(0, -1);
+}
+if (base.startsWith('http') && !base.endsWith('/api')) {
+  base = `${base}/api`;
+}
+const API_BASE = base;
 
 export const getAuthToken = () => {
   return localStorage.getItem('dos_token');
